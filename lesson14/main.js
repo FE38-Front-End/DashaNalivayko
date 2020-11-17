@@ -1,4 +1,4 @@
-var data = [
+const data = [
     {
         firstName: 'Ashton',
         lastName: 'Kutcher',
@@ -14,12 +14,12 @@ var data = [
     }
 ];
 
-const Surname = prompt('Enter your surname', '');
+const surname = prompt('Enter your surname', '');
 const noResults = 'No results found for your request';
 
 for (let i = 0; i < data.length; i++) {
     if (data[i].lastName === Surname) {
-        var userName = `user name: ${data[i].firstName} ${data[i].lastName}.
+        let userName = `user name: ${data[i].firstName} ${data[i].lastName}.
 user age: ${data[i].age}.`;
         break
     }
