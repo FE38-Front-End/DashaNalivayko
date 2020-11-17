@@ -42,7 +42,7 @@ if (floors >= 1 & floors <= 25) {
 // let salaries = {  John: 100,  Ann: 160,  Pete: 130 }
 // Напишите код для суммирования всех зарплат и сохраните результат в переменной sum.
 
-let salaries = {  John: 100,  Ann: 160,  Pete: 130 };
+const salaries = {  John: 100,  Ann: 160,  Pete: 130 };
 let sum = 0;
 
 for (var key in salaries) {
