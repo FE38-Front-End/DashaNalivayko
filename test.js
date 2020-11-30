@@ -1,25 +1,28 @@
 
 
-const wContainer = prompt ('Введите ширину контейнера в метрах');
-const hContainer = prompt ('Введите высоту контейнера в метрах');
-const lContainer = prompt ('Введите длину контейнера в метрах');
-const dPipe = prompt ('Введите диметр трубы в метрах');
+const wContainer = prompt ('Введите ширину контейнера в метрах','');
+const hContainer = prompt ('Введите высоту контейнера в метрах','');
+const lContainer = prompt ('Введите длину контейнера в метрах','');
+const dPipe = prompt ('Введите диметр трубы в метрах','');
+// const dPipe2 = prompt ('Введите диметр второй трубы в метрах');
 
-let containerSquare;
+
+
 const squareContainer = function (w, h) {
-    containerSquare = w*h;
-    return containerSquare
+    return w*h
 }
 
-let pipeSquare;
-const squarePipe = function (d) {
-    pipeSquare = Math.PI*((dPipe/2)*(dPipe/2));
-    return pipeSquare
+
+const squarePipe = function (dPipe) {
+    return Math.PI*Math.pow(dPipe/2,2);
 }
 
-squareContainer (wContainer, hContainer, lContainer);
-squarePipe (dPipe);
+function calculator (wContainer, hContainer, lContainer, dPipe) {
+    const pipeSquare = squarePipe(dPipe);
+    const containerSquare = squareContainer(wContainer, hContainer);
+    let quantity = Math.floor(containerSquare/pipeSquare);
+    let pMetres = quantity*lContainer;
+return pMetres
+}
 
-let metres = Math.floor(containerSquare/pipeSquare);
-let pMetres = metres*lContainer;
-console.log (pMetres);
+console.log (calculator(wContainer, hContainer, lContainer, dPipe))
