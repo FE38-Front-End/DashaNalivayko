@@ -4,7 +4,7 @@
 // (список создаёте на своё усмотрение).
 
 
-let elements = document.querySelectorAll ('li');
+const elements = document.querySelectorAll ('li');
 for (let elem of elements) {
     console.log(elem.innerHTML);
 
