@@ -15,10 +15,21 @@ for (let elem of elements) {
 // Сформировать неупорядоченный список в js с числами от 1 до n, 
 // где n вводит пользователь, готовый список вывести в html
 
-const list = document.insertAdjacentHTML ('beforeend', '<ul id='ul'> Номера: </ul>');
+// const list = document.insertAdjacentHTML ('beforeend', `<ul id='ul'> Номера: </ul>`);
+// const n = prompt("Введите длину списка");
+// for (i = 1; i <= n; i++) {
+//   const li = document.createElement("li");
+//   li.innerHTML = i;
+//   list.append(li);
+// }
+
+const ul = document.createElement ('ul');
+ul.innerHTML = 'Список';
+document.body.append(ul);
+
 const n = prompt("Введите длину списка");
-for (i = 1; i <= n; i++) {
-  const li = document.createElement("li");
+for (let i = 1; i <= n; i++) {
+  const li = document.createElement('li');
   li.innerHTML = i;
-  list.append(li);
+  ul.append(li);
 }
