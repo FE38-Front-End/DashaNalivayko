@@ -37,4 +37,5 @@ let delElementClick = function (event) {
         li[li.length-1].remove();
     }
 }
+
 delElement.addEventListener('click', delElementClick);
