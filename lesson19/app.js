@@ -33,7 +33,8 @@ let delElementClick = function (event) {
     const li = document.querySelectorAll('li');
     if (li.length === 0) {
         alert('Список пуст');
+    } else {
+        li[li.length-1].remove();
     }
-    li[li.length-1].remove();
 }
 delElement.addEventListener('click', delElementClick);
