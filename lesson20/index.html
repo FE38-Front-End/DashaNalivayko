@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <p>
+        1) Создать интерфейс для возможности изменять положение окружности в пределах периметра квадрата.<br>
+        2) Предусмотреть возможность ввода параметров квадрата и окружности.<br>
+        3) В случае когда окружность достигла одной из границ квадрата заблокировать клавишу для этого направления.<br>
+        4) Шаг движения окружности должен быть выбран пользователем.<br>
+        5) Предусмотреть валидацию для ввода данных, например нельзя создать окружность большего диаметра чем сторона квадрата. По умолчанию окружность распологать в центре квадрата.<br>
+    </p>
+    <div class ="wrapper">
+        <div class="navigation">
+            <button class="navigation-up">
+                <div class="arrow-up"></div>
+            </button>
+            <button class="navigation-left">
+                <div class="arrow-left"></div>
+            </button>
+            <button class="navigation-down">
+                <div class="arrow-down"></div>
+            </button>
+            <button class="navigation-right">
+                <div class="arrow-right"></div>
+            </button>
+            <button class="reset">RESET</button>
+        </div>
+        <div class="square">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
