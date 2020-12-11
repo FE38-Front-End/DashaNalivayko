@@ -1,0 +1,14 @@
+button {
+    padding: 5px;
+    background-color: pink;
+    color: black;
+    border-radius: 5px;
+    border: solid 1px black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 150px;
+    height: 50px;
+} 
