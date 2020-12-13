@@ -1,32 +1,7 @@
 // параметры
 
-// let widthSquare = +prompt('Введите сторону квадрата, px');
-// if (!widthSquare|| null ) {
-//     alert('Введите число!');
-//     } else {
-//         widthCircle = +prompt('Введите диаметр круга, px');
-//         if (!widthCircle || null) {
-//             alert('Введите число!');
-//         } else if (widthSquare <= widthCircle) {
-//             circle.remove();
-//             square.remove();
-//             alert('Диаметр круга должен быть меньше стороны квадрата');
-//             } else {
-//                 step = +prompt('Введите шаг движения окружности, px');
-//                 if (!step || null) {
-//                     alert('Введите число!');
-//                 } else if ((widthSquare - widthCircle)/2 <= step) {
-//                     alert('Шаг движения окружности слишком большой для заданных параметров');
-//                     circle.remove();
-//                     square.remove();
-//                 };
-//             }; 
-// };
-
-
 const circle = document.querySelector('.circle');
 const square = document.querySelector('.square');
-
 
 let b;
 let getB = function () {
@@ -42,6 +17,29 @@ let getB = function () {
         alert('Круг может сделать по одному неполному шагу в каждую сторону');
     }
 }
+// document.addEventListener ('DOMContentLoaded', () => {
+//     navLeft.classList.add('disabled');
+//     navRight.classList.add('disabled');
+//     navUp.classList.add('disabled');
+//     navDown.classList.add('disabled');
+//     navUp.disabled = true;
+//     navDown.disabled = true;
+//     navLeft.disabled = true;
+//     navRight.disabled = true;
+// }) 
+
+// function active () {
+//     navLeft.classList.remove('disabled');
+//     navRight.classList.remove('disabled');
+//     navUp.classList.remove('disabled');
+//     navDown.classList.remove('disabled');
+//     navUp.disabled = false;
+//     navDown.disabled = false;
+//     navLeft.disabled = false;
+//     navRight.disabled = false;
+// }
+// -------------- спросить почему не работает
+    
 
 const addWidthSquare = document.querySelector('.addWidthSquare');
 let widthSquare;
@@ -50,29 +48,35 @@ addWidthSquare.addEventListener('click', () => {
     square.style.visibility = 'visible';
     if (!widthSquare || null ) {
         alert('Введите число!');
-        document.querySelector('.widthSquare').value = "";
+        document.querySelector('.widthSquare').value = ""; //если написать widthSquare = "", почему не работает?
         } else {
             square.style.width = widthSquare + 'px';
             square.style.height = widthSquare + 'px';
             square.style.border = 'solid 2px darkblue';
             getB();
         }
+    // if (widthSquare && widthCircle == true) {
+    //     active()
+    // }
 });
 
 
 const addWidthCircle = document.querySelector('.addWidthCircle');
-let widthCircle = 0;
+let widthCircle;
 addWidthCircle.addEventListener('click', () => {
     widthCircle = +document.querySelector('.widthCircle').value;
     circle.style.visibility = 'visible';
     if (!widthCircle || null) {
         alert('Введите число!');
         document.querySelector('.widthCircle').value = "";
-    } else {
-        circle.style.width = widthCircle + 'px';
-        circle.style.height = widthCircle + 'px';
-        getB();
-    }
+        } else {
+            circle.style.width = widthCircle + 'px';
+            circle.style.height = widthCircle + 'px';
+            getB();
+        }
+    // if (widthSquare && widthCircle == true) {
+    //     active()
+    // }
     
 });
 
@@ -98,10 +102,6 @@ clear.addEventListener('click', () => {
     document.querySelector('.step').value = "";
     circle.style.visibility = 'hidden';
     square.style.visibility = 'hidden';
-    navLeft.classList.remove('disabled');
-    navRight.classList.remove('disabled');
-    navUp.classList.remove('disabled');
-    navDown.classList.remove('disabled');
 });
 
 
@@ -116,7 +116,6 @@ navLeft.addEventListener('click', () => {
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
         navRight.classList.remove('disabled');
         navRight.disabled = false;
-        console.log(b);
     } else {
         coordX = -b;
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
@@ -189,30 +188,10 @@ reset.addEventListener('click', () => {
 }); 
 
 
+// addWidthSquare.addEventListener('click', () => {
+//     localStorage.setItem('value', widthSquare);
+//     document.querySelector('.widthSquare').value = +localStorage.getItem('value') || '';
+//     console.log(localStorage)
+// }) 
+//--------- почему в localStorage записывает, но не работает при обновлении?
 
-
-
-
-
-
-// const VALUE_KEY = 'value';
-
-// function getValue() {
-//     return localStorage.getItem(VALUE_KEY) || '';
-// }
-
-// function saveValue(data) {
-//     localStorage.setItem(VALUE_KEY, data);
-// }
-
-// const handler = function (e) {
-//     console.log(e.target.value)
-//     saveValue(e.target.value);
-// }
-
-// const inp = document.getElementById("inp");
-
-// inp.value = getValue();
-
-
-// inp.addEventListener("change", handler);
