@@ -113,6 +113,6 @@ button.equally {
 }
 
 button.equally:active {
-    box-shadow: inset rgb(253 131 89) 1px 6px 6px;
+    box-shadow: inset rgb(183 70 32) 0px 4px 6px 2px;
 }
 
