@@ -1,118 +1,128 @@
 // параметры
-
 const circle = document.querySelector('.circle');
 const square = document.querySelector('.square');
+const widthSquare = document.querySelector('.widthSquare');
+const widthCircle = document.querySelector('.widthCircle');
+const step = document.querySelector('.step');
+const addWidthSquare = document.querySelector('.addWidthSquare');
+const addWidthCircle = document.querySelector('.addWidthCircle');
+const addStep = document.querySelector('.addStep');
+const clear = document.querySelector('.clear');
+const navLeft = document.querySelector('.navigation-left');
+const navRight = document.querySelector('.navigation-right');
+const navUp = document.querySelector('.navigation-up');
+const navDown = document.querySelector('.navigation-down');
+const reset = document.querySelector('.reset');
+
+
+function disabled () {
+    navLeft.classList.add('disabled');
+    navRight.classList.add('disabled');
+    navUp.classList.add('disabled');
+    navDown.classList.add('disabled');
+    navUp.disabled = true;
+    navDown.disabled = true;
+    navLeft.disabled = true;
+    navRight.disabled = true;
+};
+
+function active () {
+    navLeft.classList.remove('disabled');
+    navRight.classList.remove('disabled');
+    navUp.classList.remove('disabled');
+    navDown.classList.remove('disabled');
+    navUp.disabled = false;
+    navDown.disabled = false;
+    navLeft.disabled = false;
+    navRight.disabled = false;
+};
+
+function validation () {
+    if (+widthSquare.value && +widthCircle.value && +step.value) {
+        active();
+    }
+}
+
+disabled();
+reload();
 
 let b;
 let getB = function () {
-    b = (widthSquare - widthCircle)/2;
-    if (widthSquare < widthCircle) {
+    b = (+widthSquare.value - +widthCircle.value)/2;
+    if (+widthSquare.value < +widthCircle.value) {
         alert('Диаметр круга должен быть меньше стороны квадрата');
         circle.style.visibility = 'hidden';
         square.style.visibility = 'hidden';
-        document.querySelector('.widthSquare').value = "";
-        document.querySelector('.widthCircle').value = "";
+        widthCircle.value = "";
+        disabled();
     }
-    if (step >= b && b > 0) {
-        alert('Круг может сделать по одному неполному шагу в каждую сторону');
-    }
-}
-// document.addEventListener ('DOMContentLoaded', () => {
-//     navLeft.classList.add('disabled');
-//     navRight.classList.add('disabled');
-//     navUp.classList.add('disabled');
-//     navDown.classList.add('disabled');
-//     navUp.disabled = true;
-//     navDown.disabled = true;
-//     navLeft.disabled = true;
-//     navRight.disabled = true;
-// }) 
+}   
 
-// function active () {
-//     navLeft.classList.remove('disabled');
-//     navRight.classList.remove('disabled');
-//     navUp.classList.remove('disabled');
-//     navDown.classList.remove('disabled');
-//     navUp.disabled = false;
-//     navDown.disabled = false;
-//     navLeft.disabled = false;
-//     navRight.disabled = false;
-// }
-// -------------- спросить почему не работает
-    
-
-const addWidthSquare = document.querySelector('.addWidthSquare');
-let widthSquare;
 addWidthSquare.addEventListener('click', () => {
-    widthSquare = +document.querySelector('.widthSquare').value;
     square.style.visibility = 'visible';
-    if (!widthSquare || null ) {
+    if (!+widthSquare.value || null ) {
         alert('Введите число!');
-        document.querySelector('.widthSquare').value = ""; //если написать widthSquare = "", почему не работает?
+        widthSquare.value = "";
         } else {
-            square.style.width = widthSquare + 'px';
-            square.style.height = widthSquare + 'px';
+            square.style.width = widthSquare.value + 'px';
+            square.style.height = widthSquare.value + 'px';
             square.style.border = 'solid 2px darkblue';
             getB();
+            localStorage.setItem('valueSquare', widthSquare.value );
         }
-    // if (widthSquare && widthCircle == true) {
-    //     active()
-    // }
+    validation ()
 });
 
-
-const addWidthCircle = document.querySelector('.addWidthCircle');
-let widthCircle;
 addWidthCircle.addEventListener('click', () => {
-    widthCircle = +document.querySelector('.widthCircle').value;
     circle.style.visibility = 'visible';
-    if (!widthCircle || null) {
+    if (!+widthCircle.value || null) {
         alert('Введите число!');
-        document.querySelector('.widthCircle').value = "";
+        widthCircle.value = "";
         } else {
-            circle.style.width = widthCircle + 'px';
-            circle.style.height = widthCircle + 'px';
+            circle.style.width = widthCircle.value + 'px';
+            circle.style.height = widthCircle.value + 'px';
             getB();
+            localStorage.setItem('valueCircle', widthCircle.value );
         }
-    // if (widthSquare && widthCircle == true) {
-    //     active()
-    // }
-    
+    validation ()
 });
 
-
-const addStep = document.querySelector('.addStep');
-let step;
 addStep.addEventListener('click', () => {
-    step = +document.querySelector('.step').value;
-    if (!step || null) {
+    if (!+step.value || null) {
         alert('Введите число!');
-        document.querySelector('.step').value = "";
-    }
-        else {
-            getB();
+        step.value = "";
+    } else {
+        if (+step.value >= b && b > 0) {
+            alert('Круг может сделать по одному неполному шагу в каждую сторону');
         }
+        localStorage.setItem('valueStep', step.value );
+        }
+    validation ()
 });
 
-
-const clear = document.querySelector('.clear');
 clear.addEventListener('click', () => {
-    document.querySelector('.widthSquare').value = "";
-    document.querySelector('.widthCircle').value = "";
-    document.querySelector('.step').value = "";
+    widthSquare.value = "";
+    widthCircle.value = "";
+    step.value = "";
     circle.style.visibility = 'hidden';
     square.style.visibility = 'hidden';
+    disabled();
+    localStorage.clear();
 });
 
+function reload () {
+    widthSquare.value = localStorage.getItem('valueSquare') || '';
+    widthCircle.value = localStorage.getItem('valueCircle') || '';
+    step.value = localStorage.getItem('valueStep') || '';
+};
 
 // навигация
 let coordX = 0;
 let coordY = 0;
 
-const navLeft = document.querySelector('.navigation-left');
 navLeft.addEventListener('click', () => {
-    if (coordX > (-b) + step) {
-        coordX -= step;
+    if (coordX > (-b) + +step.value) {
+        coordX -= +step.value;
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
         navRight.classList.remove('disabled');
         navRight.disabled = false;
@@ -124,11 +134,9 @@ navLeft.addEventListener('click', () => {
     }
 });
 
-
-const navRight = document.querySelector('.navigation-right');
 navRight.addEventListener('click', () => {
-    if (b - step >= coordX) {
-        coordX += step;
+    if (b - +step.value >= coordX) {
+        coordX += +step.value;
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
         navLeft.classList.remove('disabled');
         navLeft.disabled = false;
@@ -140,11 +148,9 @@ navRight.addEventListener('click', () => {
     }
 });
 
-
-const navUp = document.querySelector('.navigation-up');
 navUp.addEventListener('click', () => {
-    if (coordY > (-b) + step) {
-        coordY -= step;
+    if (coordY > (-b) + +step.value) {
+        coordY -= +step.value;
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
         navDown.classList.remove('disabled');
         navDown.disabled = false;
@@ -156,11 +162,9 @@ navUp.addEventListener('click', () => {
     }
 });
 
-
-const navDown = document.querySelector('.navigation-down');
 navDown.addEventListener('click', () => {
-    if (b - step > coordY) {
-        coordY += step;
+    if (b - +step.value > coordY) {
+        coordY += +step.value;
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
         navUp.classList.remove('disabled');
         navUp.disabled = false;
@@ -172,26 +176,11 @@ navDown.addEventListener('click', () => {
     }   
 });
 
-const reset = document.querySelector('.reset');
 reset.addEventListener('click', () => {
-    coordY = 0;
-    coordX = 0;
-    circle.style.transform = `translate(${coordX}px,${coordY}px)`;
-    navUp.disabled = false;
-    navDown.disabled = false;
-    navLeft.disabled = false;
-    navRight.disabled = false;
-    navUp.classList.remove('disabled');
-    navDown.classList.remove('disabled');
-    navLeft.classList.remove('disabled');
-    navRight.classList.remove('disabled');
+    if (+widthSquare.value && +widthCircle.value) {
+        coordY = 0;
+        coordX = 0;
+        circle.style.transform = `translate(${coordX}px,${coordY}px)`;
+        active()
+    }
 }); 
-
-
-// addWidthSquare.addEventListener('click', () => {
-//     localStorage.setItem('value', widthSquare);
-//     document.querySelector('.widthSquare').value = +localStorage.getItem('value') || '';
-//     console.log(localStorage)
-// }) 
-//--------- почему в localStorage записывает, но не работает при обновлении?
-
