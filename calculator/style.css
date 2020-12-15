@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 :root {
     --button_width : 70px;
     --button_height : 53px;
@@ -27,13 +28,20 @@
     justify-content: center;
     background-color: rgb(230 225 219);
     margin: 50px;
-    padding: 20px 0;
+    padding: 35px 0;
+    box-shadow: rgb(160 158 154) 1px 3px 4px 4px, rgb(179 176 171) -10px 10px 20px 3px;
+    border-radius: 5px;
 }
 
 .viewer {
     display: flex;
-    margin-bottom: 30px;
-    background-color: rgb(198 196 175);
+    background-color: rgb(208 206 187);
+    width: calc(var(--button_width) * 4 + var(--column-gap) * 3);
+    height: 60px;
+    border-radius: 5px;
+    box-shadow: rgb(199, 193, 184) 0px 8px 7px 0px, rgb(148 144 138) -1px 2px 7px 1px;
+    border: solid 2px black;
+    margin: 2px;
 }
 
 .value {
@@ -51,13 +59,30 @@ button {
     border: solid 2px #8d867e;
     background: radial-gradient(circle at 0 0, rgb(239 236 230), rgb(230 223 215));
     box-shadow: inset rgb(173 166 166) 0px -4px 6px, inset rgb(251 251 251) 0px 5px 8px 1px;
+    outline: none;
 }
+
+button:active {
+    box-shadow: inset rgb(204 200 200) 0px 5px 8px 1px;
+    margin-top: 4px;
+    outline: none;
+}
+
+
 
 .border {
     border-radius: 4px;
     display: grid;
     background: linear-gradient(to bottom, rgb(190 183 172 / 70%) 95%, rgb(222 216 203 / 70%));
     box-shadow: rgb(199, 193, 184) 0px 8px 7px 0px;
+}
+
+.border-viewer {
+    display: flex;
+    background: linear-gradient(to bottom, rgb(111 111 103 / 89%) 850%, rgb(255 255 255 / 100%) 15%);
+    box-shadow: inset rgb(62 61 60) 0px 3px 10px 0px;
+    margin-bottom: 35px;
+    border-radius: 3px;
 }
 
 .border:nth-last-child(3) {
@@ -76,6 +101,10 @@ button.reset {
     box-shadow: inset rgb(76 74 74) 0px -6px 6px, inset rgb(156 154 147) 0px 3px 8px 1px;
 }
 
+button.reset:active {
+    box-shadow: inset rgb(156 154 147) 0px 4px 8px 1px;
+}
+
 button.equally {
     border: solid 2px #93341d;
     background: rgb(246, 80, 32);
@@ -83,11 +112,7 @@ button.equally {
     color: rgb(254, 255, 250);
 }
 
-/* .equally {
-    grid-column-start: 4;
-    grid-row: 4/6;
-    background-color: rgb(246 80 32);
-    color: white;
-    display: flex;
-} */
+button.equally:active {
+    box-shadow: inset rgb(253 131 89) 1px 6px 6px;
+}
 
