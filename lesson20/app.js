@@ -15,35 +15,38 @@ const navDown = document.querySelector('.navigation-down');
 const reset = document.querySelector('.reset');
 
 
-function disabled () {
-    navLeft.classList.add('disabled');
-    navRight.classList.add('disabled');
-    navUp.classList.add('disabled');
-    navDown.classList.add('disabled');
-    navUp.disabled = true;
-    navDown.disabled = true;
-    navLeft.disabled = true;
-    navRight.disabled = true;
+
+let navigation = [navLeft, navRight, navUp, navDown];
+
+function disable () {
+    for (let i = 0; i <= navigation.length; i++) {
+        navigation[i].classList.add('disabled');
+        navigation[i].disabled = true;
+    }
+}; // app.js:23 Uncaught TypeError: Cannot read property 'classList' of undefined
+//at disable (app.js:23)
+//at app.js:47 
+
+function activate () {
+    for (let i = 0; i <= navigation.length; i++) {
+        navigation[i].classList.remove('disabled');
+        navigation[i].disabled = false;
+    }
 };
 
-function active () {
-    navLeft.classList.remove('disabled');
-    navRight.classList.remove('disabled');
-    navUp.classList.remove('disabled');
-    navDown.classList.remove('disabled');
-    navUp.disabled = false;
-    navDown.disabled = false;
-    navLeft.disabled = false;
-    navRight.disabled = false;
+function reload () {
+    widthSquare.value = localStorage.getItem('valueSquare') || '';
+    widthCircle.value = localStorage.getItem('valueCircle') || '';
+    step.value = localStorage.getItem('valueStep') || '';
 };
 
 function validation () {
     if (+widthSquare.value && +widthCircle.value && +step.value) {
-        active();
+        activate();
     }
 }
 
-disabled();
+disable();
 reload();
 
 let b;
@@ -54,7 +57,7 @@ let getB = function () {
         circle.style.visibility = 'hidden';
         square.style.visibility = 'hidden';
         widthCircle.value = "";
-        disabled();
+        disable();
     }
 }   
 
@@ -106,15 +109,9 @@ clear.addEventListener('click', () => {
     step.value = "";
     circle.style.visibility = 'hidden';
     square.style.visibility = 'hidden';
-    disabled();
+    disable();
     localStorage.clear();
 });
-
-function reload () {
-    widthSquare.value = localStorage.getItem('valueSquare') || '';
-    widthCircle.value = localStorage.getItem('valueCircle') || '';
-    step.value = localStorage.getItem('valueStep') || '';
-};
 
 // навигация
 let coordX = 0;
@@ -181,6 +178,6 @@ reset.addEventListener('click', () => {
         coordY = 0;
         coordX = 0;
         circle.style.transform = `translate(${coordX}px,${coordY}px)`;
-        active()
+        activate()
     }
 }); 
