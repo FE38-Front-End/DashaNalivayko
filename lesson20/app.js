@@ -19,16 +19,14 @@ const reset = document.querySelector('.reset');
 let navigation = [navLeft, navRight, navUp, navDown];
 
 function disable () {
-    for (let i = 0; i <= navigation.length; i++) {
+    for (let i = 0; i < navigation.length; i++) {
         navigation[i].classList.add('disabled');
         navigation[i].disabled = true;
     }
-}; // app.js:23 Uncaught TypeError: Cannot read property 'classList' of undefined
-//at disable (app.js:23)
-//at app.js:47 
+}; 
 
 function activate () {
-    for (let i = 0; i <= navigation.length; i++) {
+    for (let i = 0; i < navigation.length; i++) {
         navigation[i].classList.remove('disabled');
         navigation[i].disabled = false;
     }
