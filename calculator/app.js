@@ -31,10 +31,9 @@ function replace () {
 
 let operations = [plus, minus, powerVariable, multiply, divide];
 
-for (let i = 0; i < operations.length; i++) {
-    const element = operations[i].textContent;
-    let arr = operation.push[element];
-}
+operations.forEach ((elem) => {
+    elem = operations.textContent;
+});
 // let operation = operations.forEach(element => {element.textContent});
 
 // function around () {
@@ -53,9 +52,12 @@ g = viewer.textContent - Math.trunc(viewer.textContent);
 buttons.addEventListener('click', (event) => {
     let buttonType = event.target;
     if (buttonType.tagName !== 'BUTTON') return;
-    // const operations = (elem) =>
-    //   elem === "+" || elem === "-" || elem === "*" || elem === "/";
-    // if (operations() === true) {
+    operations.some(function(elem) {
+        if (elem === base) {
+            return alert ('Введите число');
+        }
+    });
+
         
     //     // base = viewer.textContent.split('^');
     //     // pow = base[1];
@@ -113,28 +115,7 @@ buttons.addEventListener('click', (event) => {
 
             // for (let i = 0; i < operations.length;  i++) { 
                 base = viewer.textContent.slice (-1);
-                
-                // if (base !== operations.some) {
-                //     if (base !== '^') {
-                //         viewer.textContent += '^';
-                //     } else {
-                //         alert ('Введите степень');
-                //     }
-                // } else {
-                //     alert ('Введите число');
-                // }
-
-                operations.some(function(elem) {
-                    if (elem !== base) {
-                        if (base !== '^') {
-                            return viewer.textContent += '^';
-                        } else {
-                            return alert ('Введите степень');
-                        }
-                    } else {
-                        return alert ('Введите число');
-                    }
-                });
+                viewer.textContent += '^';
 
             // for (let i = 0; i < operations.length; i++) { 
             //     if (base !== operations[i]) {
