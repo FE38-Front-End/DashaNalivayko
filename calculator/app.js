@@ -10,116 +10,217 @@ const sqrt = document.querySelector('.sqrt');
 const plusMinus = document.querySelector('.plusMinus');
 const powerNeg = document.querySelector('.powerNeg');
 const sqr = document.querySelector('.sqr');
-const powerVariable = document.querySelector('.powerVariable');
 const factorial = document.querySelector('.factorial');
+const plus = document.querySelector('.plus');
+const minus = document.querySelector('.minus');
+const powerVariable = document.querySelector ('.powerVariable');
 const round = 4;
+let pow;
 let base;
 let b;
 
 function replace () {
     for (let i = 0; i < viewer.textContent.length;  i++) {
-        if ((viewer.textContent[i] == '×') || (viewer.textContent[i] == '÷')) {
+        if ((viewer.textContent[i] == '×') || (viewer.textContent[i] == '÷') || (viewer.textContent[i] == '^')) {
             viewer.textContent = viewer.textContent.replace ('×','*');
             viewer.textContent = viewer.textContent.replace ('÷','/');
+            viewer.textContent = viewer.textContent.replace ('^','**');
         }
     }
 };
 
-function around () {
-    if (!!(viewer.textContent - Math.trunc(viewer.textContent)) === true) {
-        viewer.textContent = (+viewer.textContent).toFixed(round);
-     }
-}
+let operations = [plus, minus, powerVariable, multiply, divide];
 
-for (let node of buttons.children) {
-    let num = node.textContent;
-    node.addEventListener ('click', () => {
-        if (viewer.textContent == 0) {
-            viewer.textContent = '';
-        };
-        // viewer.textContent.match = /^(?!(\d)\1{3})\d{5}$/;
-        // if (viewer.textContent.length > 18) {
-        //     viewer.textContent.length = 18;
-        // }
-        switch (num) {
-            case 'CE':
-                localStorage.setItem('previousRes', viewer.textContent);
-                viewer.textContent = '0';
-                console.log(localStorage)
-            break;
-            case 'AC':
-                viewer.textContent = '0';
-                localStorage.clear();
-                console.log(localStorage)
-            break;
-            case '=':
-                replace();
-                if (viewer.textContent.includes('^')) {
-                    base = viewer.textContent.split('^');
-                    let pow = base[1];
-                    base = base[0];
-                    viewer.textContent = Math.pow(eval(base), pow);
-                }
-                viewer.textContent = eval(viewer.textContent); 
-                around();
-            break;
-            case '%':
-                replace();
-                viewer.textContent = eval(viewer.textContent)/100;
-                around();
-            break;
-            case '+/-':
-                replace();
-                viewer.textContent = eval(viewer.textContent)* -1;
-                around();
-            break;
-            case '√x':
-                replace();
-                viewer.textContent = Math.sqrt(eval(viewer.textContent));
-                around();
-            break;
-            case 'x2':
-                replace();
-                viewer.textContent = Math.pow(eval(viewer.textContent), 2);
-                around();
-            break;
-            case 'x-1':
-                replace();
-                viewer.textContent = 1/eval(viewer.textContent);
-                around();
-            break;
-            case 'xy':
-                viewer.textContent += '^';
-                around();
-            break;
-            case 'x!':
-                replace();
-                const factorial = (n) => {
-                    if (n === 0) {
-                      return 1;
-                    }
-                    return n * factorial(n - 1);
-                };
-                if (Number.isInteger(viewer.textContent) === true && viewer.textContent > 0) {
-                    viewer.textContent = factorial(eval(viewer.textContent));
-                } else {
-                    alert ('Введите целое положительное число');
-                }
-            break;
-            case 'lg':
-                replace();
-                viewer.textContent = Math.log10(eval(viewer.textContent));
-                around();
-            break;
-            default:
-                if (viewer.textContent.length < 18) {
-                    viewer.textContent = viewer.textContent + num;
-                };
-                break;
-        }
+for (let i = 0; i < operations.length; i++) {
+    const element = operations[i].textContent;
+    let arr = operation.push[element];
+}
+// let operation = operations.forEach(element => {element.textContent});
+
+// function around () {
+//     if (!!(viewer.textContent - Math.trunc(viewer.textContent)) === true) {
+//         viewer.textContent = (+viewer.textContent).toFixed(round);
+//     }
+//     if (viewer.textContent.length > 15) {
+//         viewer.textContent = viewer.textContent.slice (0, 14);
+//     }
+//     return viewer.textContent
+// }
+
+let g;
+g = viewer.textContent - Math.trunc(viewer.textContent);
+
+buttons.addEventListener('click', (event) => {
+    let buttonType = event.target;
+    if (buttonType.tagName !== 'BUTTON') return;
+    // const operations = (elem) =>
+    //   elem === "+" || elem === "-" || elem === "*" || elem === "/";
+    // if (operations() === true) {
+        
+    //     // base = viewer.textContent.split('^');
+    //     // pow = base[1];
+    //     // base = base[0];
+    //     // if (base.includes('+')) {
+    //     //     plus = base.split('+');
+    //     //     plus = base[base.length-1];
+    //     // }
+    //     // if (Number.isInteger(+plus)) {
+    //     //     res = Math.pow(plus, pow);
+    //     //     viewer.textContent = (plus[0] + res);
+    //     // }
+    //     debugger
+    // }
+    switch (buttonType.textContent) {
+        case 'CE':
+            localStorage.setItem('previousRes', viewer.textContent);
+            viewer.textContent = '0';
+            console.log(localStorage)
+        break;
+        case 'AC':
+            viewer.textContent = '0';
+            localStorage.clear();
+            console.log(localStorage)
+        break;
+        case '%':
+            replace();
+            viewer.textContent = eval(viewer.textContent)/100;
+            //around();
+        break;
+        case '+/-':
+            replace();
+            viewer.textContent = eval(viewer.textContent)* -1;
+            //around();
+        break;
+        case '√x':
+            replace();
+            viewer.textContent = Math.sqrt(eval(viewer.textContent));
+            //around();
+        break;
+        case 'x2':
+            replace();
+            viewer.textContent = Math.pow(eval(viewer.textContent), 2);
+            // //around();
+        break;
+        case 'x-1':
+            replace();
+            viewer.textContent = 1/eval(viewer.textContent);
+            //around();
+        break;
+        case 'xy':
             
-    });
-}
+            //запрет удвоения знака
+            //запрет постановки знака после операций
 
+            // for (let i = 0; i < operations.length;  i++) { 
+                base = viewer.textContent.slice (-1);
+                
+                // if (base !== operations.some) {
+                //     if (base !== '^') {
+                //         viewer.textContent += '^';
+                //     } else {
+                //         alert ('Введите степень');
+                //     }
+                // } else {
+                //     alert ('Введите число');
+                // }
 
+                operations.some(function(elem) {
+                    if (elem !== base) {
+                        if (base !== '^') {
+                            return viewer.textContent += '^';
+                        } else {
+                            return alert ('Введите степень');
+                        }
+                    } else {
+                        return alert ('Введите число');
+                    }
+                });
 
+            // for (let i = 0; i < operations.length; i++) { 
+            //     if (base !== operations[i]) {
+            //         if ((i = operations.length-1) && (base !== operations[i])) {
+            //             viewer.textContent += '^';
+            //             break
+            //         } 
+            //     } else {
+            //         alert ('Введите число');
+            //         break
+            //     }
+
+            // }
+                //     alert ('Введите число');
+                //     break
+                // } else {
+                //     if (i = operations.length-1) {
+                //         viewer.textContent += '^';
+                //     }
+                // }
+            //     if (i = operations.length-1) {
+            //         if (base !== operations[i]) {
+            //         viewer.textContent += '^';
+            //     }
+            // }
+            viewer.textContent = eval(viewer.textContent);
+            debugger
+            //around();
+        break;
+        case 'x!':
+            replace();
+            const factorial = (n) => {
+                if (n === 0) {
+                    return 1;
+                }
+                return n * factorial(n - 1);
+            };
+            viewer.textContent = eval(viewer.textContent)
+            if (Number.isInteger(+viewer.textContent) === true) {
+                viewer.textContent = factorial(viewer.textContent);
+            } else {
+                alert ('Введите целое положительное число');
+            }
+
+        break;
+        case 'lg':
+            replace();
+            viewer.textContent = Math.log10(eval(viewer.textContent));
+            //around();
+        break;
+        case '=':
+            replace();
+            viewer.textContent = eval(viewer.textContent); 
+            // viewer.textContent = ""
+
+            // //для степени
+            // if (viewer.textContent.includes('^')) {
+            //     base = viewer.textContent.split('^');
+            //     pow = base[1];
+            //     base = base[0];
+            //     if (base.includes('+')) {
+            //         plus = base.split('+');
+            //         plus = base[base.length-1];
+            //     }
+            //     if (Number.isInteger(+plus)) {
+            //         res = Math.pow(plus, pow);
+            //         viewer.textContent = (plus[0] + res);
+            //     }
+            //     debugger
+            // }
+        break;
+        default:
+            if (viewer.textContent == 0) {
+                viewer.textContent = '';
+            };
+            viewer.textContent += buttonType.textContent;
+            // if (viewer.textContent.length < 18) {
+            //     viewer.textContent = viewer.textContent + num;
+            // };
+        break;
+    }
+    if (!!g === true && g.length > 5) {
+        viewer.textContent = (+viewer.textContent).toFixed(round);
+    } 
+})
+
+// if (buttonType === '=') {
+//     viewer.textContent = '';
+// }

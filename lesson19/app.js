@@ -39,3 +39,19 @@ let delElementClick = function (event) {
 }
 
 delElement.addEventListener('click', delElementClick);  
+
+
+
+
+
+// for (let node of buttons.children) {
+    //     let num = node.textContent;
+    //     node.addEventListener ('click', () => {
+    //         if (viewer.textContent == 0) {
+    //             viewer.textContent = '';
+    //         };
+        // viewer.textContent.match = /^(?!(\d)\1{3})\d{5}$/;
+        // if (viewer.textContent.length > 18) {
+        //     viewer.textContent.length = 18;
+        // }
+        // switch (num) {
