@@ -1,4 +1,4 @@
-const buttons = document.querySelector('.buttons');
+const calcBody = document.querySelector('.calcBody');
 const viewer = document.querySelector('.viewer');
 const ac = document.querySelector('.ac');
 const ce = document.querySelector('.ce');
@@ -13,11 +13,23 @@ const sqr = document.querySelector('.sqr');
 const factorial = document.querySelector('.factorial');
 const plus = document.querySelector('.plus');
 const minus = document.querySelector('.minus');
-const powerVariable = document.querySelector ('.powerVariable');
+const powBtn = document.querySelector ('.powBtn');
 const round = 4;
-let pow;
-let base;
-let b;
+let buttonType;
+let viewerArray;
+let lastNumber;
+let lastSign;
+let penultSign;
+let lastOperation;
+let penultOperation;
+let lastOperationIndex;
+let firstNumber;
+let operationsViewerArray;
+let firstPart;
+let isLastOperation;
+let isOperation;
+let lastSignFirstPart;
+let penultSignFirstPart;
 
 function replace () {
     for (let i = 0; i < viewer.textContent.length;  i++) {
@@ -25,14 +37,15 @@ function replace () {
             viewer.textContent = viewer.textContent.replace ('×','*');
             viewer.textContent = viewer.textContent.replace ('÷','/');
             viewer.textContent = viewer.textContent.replace ('^','**');
+
         }
     }
 };
 
-let operations = [plus, minus, powerVariable, multiply, divide];
-
-operations.forEach ((elem) => {
-    elem = operations.textContent;
+const operations = ['^', '×', '÷'];
+[plus, minus, powBtn, multiply, divide].forEach ((elem) => {
+    elem = elem.textContent;
+    operations.push(elem);
 });
 // let operation = operations.forEach(element => {element.textContent});
 
@@ -46,104 +59,98 @@ operations.forEach ((elem) => {
 //     return viewer.textContent
 // }
 
-let g;
-g = viewer.textContent - Math.trunc(viewer.textContent);
+// let g;
+// g = viewer.textContent - Math.trunc(viewer.textContent);
 
-buttons.addEventListener('click', (event) => {
-    let buttonType = event.target;
+calcBody.addEventListener('click', (event) => {
+    if (lastOperation === '×') {
+        lastOperation = '*'
+    }
+    if (lastOperation === '÷') {
+        lastOperation = '/'
+    }
+    if (buttonType == equally) {
+        replace();
+        viewer.textContent = eval(viewer.textContent + lastOperation + lastNumber);
+        buttonType = event.target;
+        return
+    }
+    buttonType = event.target;
+    debugger
     if (buttonType.tagName !== 'BUTTON') return;
-    operations.some(function(elem) {
-        if (elem === base) {
-            return alert ('Введите число');
-        }
-    });
+    viewerArray = viewer.textContent.split('');
+    lastSign = viewerArray[viewerArray.length-1];
+    penultSign = viewerArray[viewerArray.length-2];
+    firstNumber = `${parseInt(viewer.textContent)}`;
+    operationsViewerArray = viewerArray.filter((sign) => isNaN(sign));
+    lastOperation = operationsViewerArray[operationsViewerArray.length - 1];
+    penultOperation = operationsViewerArray[operationsViewerArray.length - 2];
 
-        
-    //     // base = viewer.textContent.split('^');
-    //     // pow = base[1];
-    //     // base = base[0];
-    //     // if (base.includes('+')) {
-    //     //     plus = base.split('+');
-    //     //     plus = base[base.length-1];
-    //     // }
-    //     // if (Number.isInteger(+plus)) {
-    //     //     res = Math.pow(plus, pow);
-    //     //     viewer.textContent = (plus[0] + res);
-    //     // }
-    //     debugger
-    // }
+    if (lastOperation !== '.') {
+        lastOperationIndex = viewerArray.lastIndexOf(lastOperation);
+    } else {
+        lastOperationIndex = viewerArray.lastIndexOf(penultOperation);
+    };
+    lastNumber = viewerArray.slice(lastOperationIndex +1).join('');
+    firstPart = viewerArray.slice(0, -lastNumber.length).join('');
+    if (lastNumber === '') {
+        firstPart = viewer.textContent;
+    }
+    isLastOperation = operations.includes(lastSign);
+    isOperation = operations.includes(buttonType.textContent);
     switch (buttonType.textContent) {
-        case 'CE':
-            localStorage.setItem('previousRes', viewer.textContent);
-            viewer.textContent = '0';
-            console.log(localStorage)
-        break;
         case 'AC':
             viewer.textContent = '0';
-            localStorage.clear();
-            console.log(localStorage)
+        break;
+        case '←':
+            viewer.textContent = viewerArray.slice(0,-1).join('');
+            if (viewer.textContent.length == 0) {
+                viewer.textContent = '0';
+            }
         break;
         case '%':
-            replace();
-            viewer.textContent = eval(viewer.textContent)/100;
-            //around();
+            // replace();
+            // viewer.textContent = eval(viewer.textContent)/100;
         break;
         case '+/-':
-            replace();
-            viewer.textContent = eval(viewer.textContent)* -1;
-            //around();
+            lastSignFirstPart = firstPart[firstPart.length-1];
+            penultSignFirstPart = firstPart[firstPart.length-2];
+            // смена минуса, если "до" стоит знак 
+            if (lastSignFirstPart === '-' && operations.some((elem) => elem == penultSignFirstPart))  {
+                firstPart = firstPart.split('').slice(0,-1).join('');
+                viewer.textContent = firstPart + lastNumber;
+                // смена минуса, если "до" число (не знак)
+            } else if (lastSignFirstPart === '-' && !operations.some((elem) => elem == penultSignFirstPart)) {
+                firstPart = firstPart.split('').slice(0,-1).join('');
+                viewer.textContent = firstPart + '+' + lastNumber;
+                // смена плюса
+                } else {
+                    viewer.textContent = firstPart + lastNumber * -1;
+                }
         break;
         case '√x':
             replace();
-            viewer.textContent = Math.sqrt(eval(viewer.textContent));
-            //around();
+            if (eval(viewer.textContent) > 0 ) {
+                viewer.textContent = Math.sqrt(eval(viewer.textContent));
+            } else {
+                alert ('Введите положительное число');
+            }
         break;
         case 'x2':
             replace();
             viewer.textContent = Math.pow(eval(viewer.textContent), 2);
-            // //around();
         break;
         case 'x-1':
             replace();
             viewer.textContent = 1/eval(viewer.textContent);
-            //around();
         break;
         case 'xy':
-            
             //запрет удвоения знака
-            //запрет постановки знака после операций
-
-            // for (let i = 0; i < operations.length;  i++) { 
-                base = viewer.textContent.slice (-1);
+            if (lastSign === '^' || lastSign === '.' || operations.some((elem) => elem == lastSign)) {
+                viewer.textContent = viewer.textContent;
+            } else {
                 viewer.textContent += '^';
-
-            // for (let i = 0; i < operations.length; i++) { 
-            //     if (base !== operations[i]) {
-            //         if ((i = operations.length-1) && (base !== operations[i])) {
-            //             viewer.textContent += '^';
-            //             break
-            //         } 
-            //     } else {
-            //         alert ('Введите число');
-            //         break
-            //     }
-
-            // }
-                //     alert ('Введите число');
-                //     break
-                // } else {
-                //     if (i = operations.length-1) {
-                //         viewer.textContent += '^';
-                //     }
-                // }
-            //     if (i = operations.length-1) {
-            //         if (base !== operations[i]) {
-            //         viewer.textContent += '^';
-            //     }
-            // }
-            viewer.textContent = eval(viewer.textContent);
-            debugger
-            //around();
+            }
         break;
         case 'x!':
             replace();
@@ -154,54 +161,56 @@ buttons.addEventListener('click', (event) => {
                 return n * factorial(n - 1);
             };
             viewer.textContent = eval(viewer.textContent)
-            if (Number.isInteger(+viewer.textContent) === true) {
+            if (((Number.isInteger(+viewer.textContent) === true)) && (viewer.textContent > 0)) {
                 viewer.textContent = factorial(viewer.textContent);
             } else {
                 alert ('Введите целое положительное число');
             }
-
+            debugger
         break;
         case 'lg':
             replace();
             viewer.textContent = Math.log10(eval(viewer.textContent));
-            //around();
+        break;
+        case '.':
+            let pointInLastNumber = lastNumber.split('').some((elem) => elem === ".");
+            if (isLastOperation) {
+                viewer.textContent += 0 + buttonType.textContent;
+            } else if ((lastSign === '.') || (pointInLastNumber)) {
+                viewer.textContent = viewer.textContent
+            } else {
+                viewer.textContent += buttonType.textContent;
+            }
         break;
         case '=':
             replace();
             viewer.textContent = eval(viewer.textContent); 
-            // viewer.textContent = ""
-
-            // //для степени
-            // if (viewer.textContent.includes('^')) {
-            //     base = viewer.textContent.split('^');
-            //     pow = base[1];
-            //     base = base[0];
-            //     if (base.includes('+')) {
-            //         plus = base.split('+');
-            //         plus = base[base.length-1];
-            //     }
-            //     if (Number.isInteger(+plus)) {
-            //         res = Math.pow(plus, pow);
-            //         viewer.textContent = (plus[0] + res);
-            //     }
-            //     debugger
-            // }
         break;
         default:
-            if (viewer.textContent == 0) {
-                viewer.textContent = '';
-            };
-            viewer.textContent += buttonType.textContent;
+            if (isLastOperation && isOperation) {
+                viewerArray = viewerArray.slice(0,-1);
+                viewer.textContent = viewerArray.join('') + buttonType.textContent;
+            } else if ((lastSign === '0') && (operations.some((elem) => elem == penultSign))) {
+                viewer.textContent = viewer.textContent
+            } else {
+                if ((viewer.textContent === "0") && (isOperation) && (lastSign === '.')) {
+                    viewer.textContent = viewer.textContent
+                    break
+                };
+                if (viewer.textContent === "0") {
+                    viewer.textContent = '';
+                };
+                viewer.textContent += buttonType.textContent;
+            }
+                
             // if (viewer.textContent.length < 18) {
             //     viewer.textContent = viewer.textContent + num;
             // };
         break;
     }
-    if (!!g === true && g.length > 5) {
-        viewer.textContent = (+viewer.textContent).toFixed(round);
-    } 
+    // if (!!g === true && g.length > 5) {
+    //     viewer.textContent = (+viewer.textContent).toFixed(round);
+    // } 
 })
 
-// if (buttonType === '=') {
-//     viewer.textContent = '';
-// }
+
