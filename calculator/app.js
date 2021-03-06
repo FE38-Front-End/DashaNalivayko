@@ -69,7 +69,7 @@ calcBody.addEventListener('click', (event) => {
     if (lastOperation === '÷') {
         lastOperation = '/'
     }
-    if (buttonType == equally) {
+    if (buttonType == equally && event.target == equally) {
         replace();
         viewer.textContent = eval(viewer.textContent + lastOperation + lastNumber);
         buttonType = event.target;
